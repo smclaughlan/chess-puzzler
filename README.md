@@ -1,1 +1,1 @@
-# chess-puzzler
+# Chess Puzzler
