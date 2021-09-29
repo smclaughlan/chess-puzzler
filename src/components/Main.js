@@ -24,16 +24,22 @@ export default function Main(props) {
     <>
       <Container>
         <Typography variant='h3' align='center'>Chess Puzzler</Typography>
+        <Grid container spacing={2}>
         { board ?
           board.map((rowArr) => {
             return (
-            rowArr.map((spaceOrPiece) => {
-              console.log('spaceOrPiece: ', spaceOrPiece);
-              return (<Piece props={spaceOrPiece}/>)
-            }))
-          })
-          :
-          <Typography>No board</Typography> }
+              rowArr.map((spaceOrPiece) => {
+                console.log('spaceOrPiece: ', spaceOrPiece);
+                return (
+                  <Grid item xs={2}>
+                    <Piece props={spaceOrPiece}/>
+                  </Grid>
+                )
+              }))
+            })
+            :
+            <Typography>No board found. Please reload the page and try again.</Typography> }
+        </Grid>
       </Container>
     </>
   )
