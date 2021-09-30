@@ -6,7 +6,7 @@ export default function Piece(props) {
 
   React.useEffect(() => {
     setP(props.props);
-  }, []);
+  }, [props]);
 
   return (
     <>
