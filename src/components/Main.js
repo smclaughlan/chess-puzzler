@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Container, Paper, Grid, Typography } from '@material-ui/core';
+import {Button, Container, Paper, Stack, Typography } from '@material-ui/core';
 import Piece from './Piece';
 
 export default function Main(props) {
@@ -19,11 +19,11 @@ export default function Main(props) {
 
   function boardRow(rowArr) {
     return (
-      <Container>
+      <Stack direction="row" spacing={3}>
         {rowArr.map((spaceOrPiece) => {
           return (boardLocation(spaceOrPiece))
         })}
-      </Container>
+      </Stack>
     )
   }
 
