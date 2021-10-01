@@ -1,18 +1,25 @@
 import React from 'react';
-import {Typography } from '@material-ui/core';
+import {Avatar } from '@material-ui/core';
 
 export default function Piece(props) {
   const [p, setP] = React.useState();
+  const [iconPath, setIconPath] = React.useState();
 
   React.useEffect(() => {
     setP(props.props);
   }, [props]);
 
+  React.useEffect(() => {
+    if (p && p.color) {
+      setIconPath(`./pieceIcons/${p.color}_${p.pieceType}_.svg`);
+    }
+  }, [p])
+
   return (
     <>
       {p && p.pieceType ?
-      <Typography>{p.color}_{p.pieceType}_</Typography> :
-      <Typography>{p}</Typography>}
+      <Avatar src={iconPath} />:
+      <div>____</div>}
     </>
   )
 }
