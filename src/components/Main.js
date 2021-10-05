@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Container, Paper, Stack, Typography } from '@material-ui/core';
+import {Button, Container, Paper, Stack, Typography, TextField } from '@material-ui/core';
 import Piece from './Piece';
 
 export default function Main(props) {
@@ -55,7 +55,6 @@ export default function Main(props) {
 
 
   return (
-    <>
       <Container>
         <Typography variant='h3' align='center'>Chess Puzzler</Typography>
         { board ?
@@ -66,13 +65,17 @@ export default function Main(props) {
           <Typography>No board found. Please reload the page and try again.</Typography>
         }
         { board ?
-          <Stack direction='row' spacing={0}>
-            <Typography className='boardLetters'>{boardLetters.map(letter=>letter)}</Typography>
-          </Stack>
+          <>
+            <Stack direction='row' spacing={0}>
+              <Typography className='boardLetters'>{boardLetters.map(letter=>letter)}</Typography>
+            </Stack>
+            <div className='moveFieldParent'>
+              <TextField  label="Enter move (ie 'c5 c6')" variant="outlined" />
+            </div>
+          </>
           :
           <></>
         }
       </Container>
-    </>
   )
 }
