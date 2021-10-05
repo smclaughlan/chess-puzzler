@@ -10,16 +10,16 @@ export default function Piece(props) {
   }, [props]);
 
   React.useEffect(() => {
-    if (p && p.color) {
+    if (p === 'l' || p === 'd') {
+      setIconPath(`./squares/${p}.png`);
+    } else if (p && p.color) {
       setIconPath(`./pieceIcons/${p.color}_${p.pieceType}_.svg`);
     }
   }, [p])
 
   return (
     <>
-      {p && p.pieceType ?
-      <Avatar src={iconPath} />:
-      <div>____</div>}
+      <Avatar src={iconPath} />
     </>
   )
 }
