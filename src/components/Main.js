@@ -5,7 +5,6 @@ import Piece from './Piece';
 export default function Main(props) {
   const [board, setBoard] = React.useState();
   let [spaceColor, setSpaceColor] = React.useState('d');
-  let [spaceCount, setSpaceCount] = React.useState(0);
 
   React.useEffect(() => {
     async function getBoardFetch() {
