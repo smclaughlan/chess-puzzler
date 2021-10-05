@@ -19,23 +19,31 @@ export default function Main(props) {
     getBoardFetch();
   }, []);
 
-  function boardRow(rowArr, idx) {
+  function boardRow(rowArr, rowIdx) {
     return (
-      <Stack key={idx} direction="row" spacing={0}>
-        {rowArr.map((spaceOrPiece) => {
-          return (boardLocation(spaceOrPiece))
+      <Stack key={rowIdx} direction="row" spacing={0}>
+        {rowArr.map((spaceOrPiece, spaceIdx) => {
+          return (boardLocation(spaceOrPiece, rowIdx, spaceIdx))
         })}
       </Stack>
     )
   }
 
-  function boardLocation(spaceOrPiece) {
-    if (spaceCount === 8) {
-      // To get correct pattern, don't switch color on 8th/final row fill
-      spaceCount = 0;
-    } else {
-      spaceColor = spaceColor === 'l' ? 'd' : 'l';
-      spaceCount = spaceCount + 1;
+  function boardLocation(spaceOrPiece, rowIdx, spaceIdx) {
+    const rowIdxIsEven = rowIdx % 2 === 0;
+    const spaceIdxIsEven = spaceIdx % 2 === 0;
+    if (rowIdxIsEven) {
+      if (spaceIdxIsEven) {
+        spaceColor = 'l';
+      } else {
+        spaceColor = 'd';
+      }
+    } else { // rowIdx is odd
+      if (spaceIdxIsEven) {
+        spaceColor = 'd';
+      } else {
+        spaceColor = 'l';
+      }
     }
     if (spaceOrPiece === '____') {
       spaceOrPiece = spaceColor;
@@ -49,8 +57,8 @@ export default function Main(props) {
       <Container>
         <Typography variant='h3' align='center'>Chess Puzzler</Typography>
         { board ?
-          board.map((rowArr, idx) => {
-            return (boardRow(rowArr, idx))
+          board.map((rowArr, rowIdx) => {
+            return (boardRow(rowArr, rowIdx))
           })
             :
             <Typography>No board found. Please reload the page and try again.</Typography>
