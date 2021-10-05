@@ -47,7 +47,7 @@ export default function Main(props) {
     if (spaceOrPiece === '____') {
       spaceOrPiece = spaceColor;
     }
-    return (<Piece props={spaceOrPiece}/>)
+    return (<Piece spaceOrPiece={spaceOrPiece} spaceColor={spaceColor}/>)
   }
 
 
