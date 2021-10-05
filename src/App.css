@@ -11,3 +11,12 @@
 .boardPiece {
   position: absolute;
 }
+
+.boardNumber {
+  padding: 10px;
+}
+
+.boardLetters {
+  padding-left: 45px;
+  letter-spacing: 36px;
+}
