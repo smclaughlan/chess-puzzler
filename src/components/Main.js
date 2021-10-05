@@ -4,6 +4,8 @@ import Piece from './Piece';
 
 export default function Main(props) {
   const [board, setBoard] = React.useState();
+  let [spaceColor, setSpaceColor] = React.useState('l');
+  let [spaceCount, setSpaceCount] = React.useState(0);
 
   React.useEffect(() => {
     async function getBoardFetch() {
@@ -17,9 +19,9 @@ export default function Main(props) {
     getBoardFetch();
   }, []);
 
-  function boardRow(rowArr) {
+  function boardRow(rowArr, idx) {
     return (
-      <Stack direction="row" spacing={3}>
+      <Stack key={idx} direction="row" spacing={3}>
         {rowArr.map((spaceOrPiece) => {
           return (boardLocation(spaceOrPiece))
         })}
@@ -28,6 +30,16 @@ export default function Main(props) {
   }
 
   function boardLocation(spaceOrPiece) {
+    if (spaceCount === 8) {
+      // To get correct pattern, don't switch color on 8th/final row fill
+      spaceCount = 0;
+    } else {
+      spaceColor = spaceColor === 'l' ? 'd' : 'l';
+      spaceCount = spaceCount + 1;
+    }
+    if (spaceOrPiece === '____') {
+      spaceOrPiece = spaceColor;
+    }
     return (<Piece props={spaceOrPiece}/>)
   }
 
@@ -37,8 +49,8 @@ export default function Main(props) {
       <Container>
         <Typography variant='h3' align='center'>Chess Puzzler</Typography>
         { board ?
-          board.map((rowArr) => {
-            return (boardRow(rowArr))
+          board.map((rowArr, idx) => {
+            return (boardRow(rowArr, idx))
           })
             :
             <Typography>No board found. Please reload the page and try again.</Typography>
