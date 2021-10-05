@@ -20,3 +20,8 @@
   padding-left: 45px;
   letter-spacing: 36px;
 }
+
+.moveFieldParent {
+  margin: 10px;
+  padding: 10px;
+}
