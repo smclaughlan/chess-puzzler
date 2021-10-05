@@ -19,7 +19,7 @@ export default function Piece(props) {
 
   return (
     <>
-      <Avatar src={iconPath} />
+      <Avatar src={iconPath} variant="square"/>
     </>
   )
 }
