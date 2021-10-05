@@ -1,5 +1,4 @@
 import React from 'react';
-import {Avatar } from '@material-ui/core';
 
 export default function Piece(props) {
   const [p, setP] = React.useState();
