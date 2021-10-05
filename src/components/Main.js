@@ -4,7 +4,7 @@ import Piece from './Piece';
 
 export default function Main(props) {
   const [board, setBoard] = React.useState();
-  let [spaceColor, setSpaceColor] = React.useState('l');
+  let [spaceColor, setSpaceColor] = React.useState('d');
   let [spaceCount, setSpaceCount] = React.useState(0);
 
   React.useEffect(() => {
@@ -21,7 +21,7 @@ export default function Main(props) {
 
   function boardRow(rowArr, idx) {
     return (
-      <Stack key={idx} direction="row" spacing={3}>
+      <Stack key={idx} direction="row" spacing={0}>
         {rowArr.map((spaceOrPiece) => {
           return (boardLocation(spaceOrPiece))
         })}
