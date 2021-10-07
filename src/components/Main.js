@@ -56,6 +56,14 @@ export default function Main(props) {
     return (<Piece spaceOrPiece={spaceOrPiece} spaceColor={spaceColor}/>)
   }
 
+  function handleSubmit(e) {
+    if (e.key === 'Enter') {
+      console.log('Enter key pressed.');
+      console.log(e.target.value);
+    }
+    // console.log(e);
+  }
+
 
   return (
       <Container>
@@ -74,7 +82,8 @@ export default function Main(props) {
             </Stack>
             <Typography>Try to find checkmate for white within {withinTurns} turns. This is turn {currTurn}.</Typography>
             <div className='moveFieldParent'>
-              <TextField  label="Enter move (ie 'c5 c6')" variant="outlined" />
+              <TextField label="Enter move (ie 'c5 c6')" variant="outlined" onKeyUp={handleSubmit}/>
+              <Button>Submit Move</Button>
             </div>
           </>
           :
