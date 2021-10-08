@@ -6,6 +6,7 @@ import {isValidMove} from '../utils/isValidMove';
 
 export default function Main(props) {
   const [board, setBoard] = React.useState();
+  const [moveStr, setMoveStr] = React.useState('');
   const [withinTurns, setWithinTurns] = React.useState();
   const [currTurn, setcurrTurn] = React.useState(0);
   const [boardNums, setBoardNums] = React.useState([8, 7, 6, 5, 4, 3, 2, 1]);
@@ -70,17 +71,30 @@ export default function Main(props) {
     return (<Piece spaceOrPiece={spaceOrPiece} spaceColor={spaceColor}/>)
   }
 
+  function handleMoveChange(e) {
+    setMoveStr(e.target.value);
+  }
+
   function handleSubmit(e) {
     if (e.key === 'Enter') {
       console.log('Enter key pressed.');
-      console.log(e.target.value);
-      const moveValid = isValidMove(e.target.value, board);
+      console.log(moveStr);
+      const moveValid = isValidMove(moveStr, board);
       // If the move is valid, modify the board with the move,
       // and send to backend
       // if (moveValid) {
 
       // }
     }
+  }
+
+  function handleSubmitClick() {
+      console.log(moveStr);
+      const moveValid = isValidMove(moveStr, board);
+      // If the move is valid, modify the board with the move,
+      // and send to backend
+      // if (moveValid) {
+      // }
   }
 
 
@@ -101,8 +115,8 @@ export default function Main(props) {
             </Stack>
             <Typography>Try to find checkmate for white within {withinTurns} turns. This is turn {currTurn}.</Typography>
             <div className='moveFieldParent'>
-              <TextField label="Enter move (ie 'c5 c6')" variant="outlined" onKeyUp={handleSubmit}/>
-              <Button>Submit Move</Button>
+              <TextField label="Enter move (ie 'c5 c6')" variant="outlined" onChange={handleMoveChange} onKeyUp={handleSubmit}/>
+              <Button onClick={handleSubmitClick}>Submit Move</Button>
             </div>
           </>
           :
