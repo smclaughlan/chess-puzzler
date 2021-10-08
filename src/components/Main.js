@@ -1,6 +1,8 @@
 import React from 'react';
 import {Button, Container, Paper, Stack, Typography, TextField } from '@material-ui/core';
 import Piece from './Piece';
+import {createBoard} from '../chess/createBoard';
+import {isValidMove} from '../utils/isValidMove';
 
 export default function Main(props) {
   const [board, setBoard] = React.useState();
@@ -15,7 +17,19 @@ export default function Main(props) {
       const res = await fetch(`http://localhost:5000/`);
       if (res.ok) {
         const bd = await res.json();
-        setBoard(bd.brd.puzzleBoard.board);
+        const newBoard = createBoard();
+        const boardWithPieces = bd.brd.puzzleBoard.board;
+        // Iterate over all positions and add pieces to newBoard
+        for(let x = 0; x < 8; x++) {
+          for (let y = 0; y < 8; y++) {
+            const posOrPiece = boardWithPieces[x][y];
+            if (posOrPiece !== '____') {
+              newBoard.addPiece(x, y, posOrPiece.color, posOrPiece.pieceType);
+            }
+          }
+        }
+
+        setBoard(newBoard);
         setWithinTurns(bd.brd.findCheckmateWithin);
       }
     }
@@ -60,8 +74,13 @@ export default function Main(props) {
     if (e.key === 'Enter') {
       console.log('Enter key pressed.');
       console.log(e.target.value);
+      const moveValid = isValidMove(e.target.value, board);
+      // If the move is valid, modify the board with the move,
+      // and send to backend
+      // if (moveValid) {
+
+      // }
     }
-    // console.log(e);
   }
 
 
@@ -69,7 +88,7 @@ export default function Main(props) {
       <Container>
         <Typography variant='h3' align='center'>Chess Puzzler</Typography>
         { board ?
-          board.map((rowArr, rowIdx) => {
+          board.board.map((rowArr, rowIdx) => {
             return (boardRow(rowArr, rowIdx))
           })
           :
