@@ -1,8 +1,11 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable require-jsdoc */
 /**
  * Returns the array position of a string.
  * 'a8' would result in [0, 0].
  * 'a1' would result in [7, 0].
  * @param {String} str - 'c5', 'a1', etc.
+ * @return {Array} - [x, y]
  */
 function stringToBoardPosition(str) {
   const letters = {
@@ -14,7 +17,7 @@ function stringToBoardPosition(str) {
     'f': 5,
     'g': 6,
     'h': 7,
-  }
+  };
   const nums = {
     '8': 0,
     '7': 1,
@@ -24,7 +27,7 @@ function stringToBoardPosition(str) {
     '3': 5,
     '2': 6,
     '1': 7,
-  }
+  };
 
   const strLetter = str[0];
   const strNum = str[1];
@@ -42,7 +45,7 @@ export function isValidMove(moveString, board) {
     'f': true,
     'g': true,
     'h': true,
-  }
+  };
   const nums = {
     '8': true,
     '7': true,
@@ -52,7 +55,7 @@ export function isValidMove(moveString, board) {
     '3': true,
     '2': true,
     '1': true,
-  }
+  };
   const mvStrSplit = moveString.split(' ');
   const firstPair = mvStrSplit[0];
   const secondPair = mvStrSplit[1];

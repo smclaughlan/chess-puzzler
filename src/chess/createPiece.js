@@ -1,3 +1,4 @@
+/* eslint-disable no-invalid-this */
 const {pieceValue} = require('./pieceValue');
 
 const wPawnMoves = [

@@ -1,3 +1,5 @@
+/* eslint-disable no-invalid-this */
+/* eslint-disable prefer-const */
 const {createPiece} = require('./createPiece');
 
 /**

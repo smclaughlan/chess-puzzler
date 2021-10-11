@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
+/* eslint-disable require-jsdoc */
 import React from 'react';
 
 export default function Piece(props) {
@@ -15,12 +18,11 @@ export default function Piece(props) {
     if (p && p.color) {
       setIconPath(`./pieceIcons/${p.color}_${p.pieceType}_.svg`);
     }
-
-  }, [p])
+  }, [p]);
 
   React.useEffect(() => {
     setSquarePath(`./squares/${props.spaceColor}.png`);
-  }, [props.spaceColor])
+  }, [props.spaceColor]);
 
   return (
     <div className="boardParent">
@@ -29,5 +31,5 @@ export default function Piece(props) {
       <></>}
       <img className='boardSpace' alt='chess board space' src={squarePath}/>
     </div>
-  )
+  );
 }
