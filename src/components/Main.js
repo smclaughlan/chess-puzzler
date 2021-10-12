@@ -6,6 +6,7 @@ import {Button, Container, Paper, Stack, Typography, TextField} from '@material-
 import Piece from './Piece';
 import {createBoard} from '../chess/createBoard';
 import {isValidMove} from '../utils/isValidMove';
+import {stringToBoardPosition} from '../utils//stringToBoardPosition';
 
 export default function Main(props) {
   const [board, setBoard] = React.useState();
@@ -78,16 +79,48 @@ export default function Main(props) {
     setMoveStr(e.target.value);
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     if (e.key === 'Enter') {
       console.log('Enter key pressed.');
       console.log(moveStr);
       const moveValid = isValidMove(moveStr, board);
       // If the move is valid, modify the board with the move,
       // and send to backend
-      // if (moveValid) {
+      if (moveValid) {
+        const [moveStrStart, moveStrEnd] = moveStr.split(' ');
+        const [moveStartX, moveStartY] = stringToBoardPosition(moveStrStart);
+        const [moveEndX, moveEndY] = stringToBoardPosition(moveStrEnd);
+        const newBoard = board.copyBoard();
+        // Save piece from start pos
+        const savedPieceColor = newBoard.board[moveStartX][moveStartY].color;
+        const savedPieceType = newBoard.board[moveStartX][moveStartY].pieceType;
+        // Remove piece from start pos
+        newBoard.removePiece(moveStartX, moveStartY);
+        // Remove piece at end pos
+        newBoard.removePiece(moveEndX, moveEndY);
+        // Place saved piece at end pos
+        newBoard.addPiece(moveEndX, moveEndY, savedPieceColor, savedPieceType);
+        setBoard(newBoard);
 
-      // }
+        try {
+          const res = await fetch(`http://localhost:5000/move`, {
+            method: 'POST',
+            body: JSON.stringify(board),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+          if (!res.ok) {
+            console.log(res);
+            throw res;
+          } else {
+            console.log('res ok');
+            console.log(res);
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
     }
   }
 
