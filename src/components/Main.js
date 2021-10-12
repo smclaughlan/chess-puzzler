@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 /* eslint-disable require-jsdoc */
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
@@ -13,6 +14,7 @@ export default function Main(props) {
   const [moveStr, setMoveStr] = React.useState('');
   const [withinTurns, setWithinTurns] = React.useState();
   const [currTurn, setcurrTurn] = React.useState(0);
+  const [whiteCheckmate, setWhiteCheckmate] = React.useState(false);
   const [boardNums, setBoardNums] = React.useState([8, 7, 6, 5, 4, 3, 2, 1]);
   const [boardLetters, setBoardLetters] = React.useState(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']);
   let [spaceColor, setSpaceColor] = React.useState('d');
@@ -101,11 +103,12 @@ export default function Main(props) {
         // Place saved piece at end pos
         newBoard.addPiece(moveEndX, moveEndY, savedPieceColor, savedPieceType);
         setBoard(newBoard);
+        setcurrTurn(currTurn + 1);
 
         try {
           const res = await fetch(`http://localhost:5000/move`, {
             method: 'POST',
-            body: JSON.stringify(board),
+            body: JSON.stringify(newBoard),
             headers: {
               'Content-Type': 'application/json',
             },
@@ -113,9 +116,26 @@ export default function Main(props) {
           if (!res.ok) {
             console.log(res);
             throw res;
-          } else {
-            console.log('res ok');
-            console.log(res);
+          } else if (res.ok) {
+            const resJson = await res.json();
+            console.log(resJson);
+            // If resJson is undefined / empty, we've reached checkmate/king can't move
+            if (resJson.move === undefined) {
+              // Handle checkmates or king can't move
+              setWhiteCheckmate(true);
+            }
+            const nextBoard = createBoard();
+            const boardWithPieces = resJson.move.board;
+            for (let x = 0; x < 8; x++) {
+              for (let y = 0; y < 8; y++) {
+                const posOrPiece = boardWithPieces[x][y];
+                if (posOrPiece !== '____') {
+                  nextBoard.addPiece(x, y, posOrPiece.color, posOrPiece.pieceType);
+                }
+              }
+            }
+            setBoard(nextBoard);
+            setcurrTurn(currTurn + 2);
           }
         } catch (err) {
           console.log(err);
@@ -148,7 +168,11 @@ export default function Main(props) {
             <Stack direction='row' spacing={0}>
               <Typography className='boardLetters'>{boardLetters.map((letter)=>letter)}</Typography>
             </Stack>
+            {!whiteCheckmate ?
             <Typography>Try to find checkmate for white within {withinTurns} turns. This is turn {currTurn}.</Typography>
+            :
+            <Typography>White found checkmate on turn {currTurn}.</Typography>
+            }
             <div className='moveFieldParent'>
               <TextField label="Enter move (ie 'c5 c6')" variant="outlined" onChange={handleMoveChange} onKeyUp={handleSubmit}/>
               <Button onClick={handleSubmitClick}>Submit Move</Button>
