@@ -5,6 +5,7 @@
 import React from 'react';
 import {Button, Container, Paper, Stack, Typography, TextField} from '@material-ui/core';
 import Piece from './Piece';
+import BoardStatusText from './BoardStatusText';
 import {createBoard} from '../chess/createBoard';
 import {isValidMove} from '../utils/isValidMove';
 import {stringToBoardPosition} from '../utils//stringToBoardPosition';
@@ -170,21 +171,7 @@ export default function Main(props) {
             <Stack direction='row' spacing={0}>
               <Typography className='boardLetters'>{boardLetters.map((letter)=>letter)}</Typography>
             </Stack>
-            {isStalemate === false && checkmatedColor === null ?
-            <Typography>Try to find checkmate for white within {withinTurns} turns. This is turn {currTurn}.</Typography>
-            :
-            <></>
-            }
-            {isStalemate ?
-            <Typography>Stalemate on turn {currTurn}.</Typography>
-            :
-            <></>
-            }
-            {checkmatedColor === 'b' ?
-            <Typography>White found checkmate on turn {currTurn}, and the challenge was to find checkmate within {withinTurns} turns.</Typography>
-            :
-            <></>
-            }
+            <BoardStatusText isStalemate={isStalemate} checkmatedColor={checkmatedColor} currTurn={currTurn} withinTurns={withinTurns}/>
             <div className='moveFieldParent'>
               <TextField label="Enter move (ie 'c5 c6')" variant="outlined" onChange={handleMoveChange} onKeyUp={handleSubmit}/>
               <Button onClick={handleSubmitClick}>Submit Move</Button>
