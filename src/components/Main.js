@@ -13,8 +13,9 @@ export default function Main(props) {
   const [board, setBoard] = React.useState();
   const [moveStr, setMoveStr] = React.useState('');
   const [withinTurns, setWithinTurns] = React.useState();
+  const [isStalemate, setIsStalemate] = React.useState(false);
+  const [checkmatedColor, setCheckmatedColor] = React.useState(null);
   const [currTurn, setcurrTurn] = React.useState(0);
-  const [whiteCheckmate, setWhiteCheckmate] = React.useState(false);
   const [boardNums, setBoardNums] = React.useState([8, 7, 6, 5, 4, 3, 2, 1]);
   const [boardLetters, setBoardLetters] = React.useState(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']);
   let [spaceColor, setSpaceColor] = React.useState('d');
@@ -119,23 +120,24 @@ export default function Main(props) {
           } else if (res.ok) {
             const resJson = await res.json();
             console.log(resJson);
-            // If resJson is undefined / empty, we've reached checkmate/king can't move
-            if (resJson.move === undefined) {
-              // Handle checkmates or king can't move
-              setWhiteCheckmate(true);
-            }
-            const nextBoard = createBoard();
-            const boardWithPieces = resJson.move.board;
-            for (let x = 0; x < 8; x++) {
-              for (let y = 0; y < 8; y++) {
-                const posOrPiece = boardWithPieces[x][y];
-                if (posOrPiece !== '____') {
-                  nextBoard.addPiece(x, y, posOrPiece.color, posOrPiece.pieceType);
+            if (resJson.stalemate === true) {
+              setIsStalemate(true);
+            } else if (resJson.checkmated === 'b') {
+              setCheckmatedColor('b');
+            } else if (resJson.move) {
+              const nextBoard = createBoard();
+              const boardWithPieces = resJson.move.board;
+              for (let x = 0; x < 8; x++) {
+                for (let y = 0; y < 8; y++) {
+                  const posOrPiece = boardWithPieces[x][y];
+                  if (posOrPiece !== '____') {
+                    nextBoard.addPiece(x, y, posOrPiece.color, posOrPiece.pieceType);
+                  }
                 }
               }
+              setBoard(nextBoard);
+              setcurrTurn(currTurn + 2);
             }
-            setBoard(nextBoard);
-            setcurrTurn(currTurn + 2);
           }
         } catch (err) {
           console.log(err);
@@ -168,10 +170,20 @@ export default function Main(props) {
             <Stack direction='row' spacing={0}>
               <Typography className='boardLetters'>{boardLetters.map((letter)=>letter)}</Typography>
             </Stack>
-            {!whiteCheckmate ?
+            {isStalemate === false && checkmatedColor === null ?
             <Typography>Try to find checkmate for white within {withinTurns} turns. This is turn {currTurn}.</Typography>
             :
-            <Typography>White found checkmate on turn {currTurn}.</Typography>
+            <></>
+            }
+            {isStalemate ?
+            <Typography>Stalemate on turn {currTurn}.</Typography>
+            :
+            <></>
+            }
+            {checkmatedColor === 'b' ?
+            <Typography>White found checkmate on turn {currTurn}, and the challenge was to find checkmate within {withinTurns} turns.</Typography>
+            :
+            <></>
             }
             <div className='moveFieldParent'>
               <TextField label="Enter move (ie 'c5 c6')" variant="outlined" onChange={handleMoveChange} onKeyUp={handleSubmit}/>
