@@ -47,28 +47,7 @@ export default function Main(props) {
   }
 
   React.useEffect(() => {
-    async function getBoardFetch() {
-      const res = await fetch(`http://localhost:5000/`);
-      if (res.ok) {
-        const bd = await res.json();
-        const newBoard = createBoard();
-        const boardWithPieces = bd.brd.puzzleBoard.board;
-        // Iterate over all positions and add pieces to newBoard
-        for (let x = 0; x < 8; x++) {
-          for (let y = 0; y < 8; y++) {
-            const posOrPiece = boardWithPieces[x][y];
-            if (posOrPiece !== '____') {
-              newBoard.addPiece(x, y, posOrPiece.color, posOrPiece.pieceType);
-            }
-          }
-        }
-
-        setBoard(newBoard);
-        setWithinTurns(bd.brd.findCheckmateWithin);
-      }
-    }
-
-    getBoardFetch();
+    getBoardAndReset();
   }, []);
 
   function boardRow(rowArr, rowIdx) {
