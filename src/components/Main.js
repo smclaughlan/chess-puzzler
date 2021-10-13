@@ -6,6 +6,7 @@ import React from 'react';
 import {Button, Container, Paper, Stack, Typography, TextField} from '@material-ui/core';
 import Piece from './Piece';
 import BoardStatusText from './BoardStatusText';
+import EnterMoves from './EnterMoves';
 import {createBoard} from '../chess/createBoard';
 import {isValidMove} from '../utils/isValidMove';
 import {stringToBoardPosition} from '../utils//stringToBoardPosition';
@@ -172,10 +173,7 @@ export default function Main(props) {
               <Typography className='boardLetters'>{boardLetters.map((letter)=>letter)}</Typography>
             </Stack>
             <BoardStatusText isStalemate={isStalemate} checkmatedColor={checkmatedColor} currTurn={currTurn} withinTurns={withinTurns}/>
-            <div className='moveFieldParent'>
-              <TextField label="Enter move (ie 'c5 c6')" variant="outlined" onChange={handleMoveChange} onKeyUp={handleSubmit}/>
-              <Button onClick={handleSubmitClick}>Submit Move</Button>
-            </div>
+            <EnterMoves isStalemate={isStalemate} checkmatedColor={checkmatedColor} handleMoveChange={handleMoveChange} handleSubmit={handleSubmit} handleSubmitClick={handleSubmitClick}/>
           </> :
           <></>
       }
