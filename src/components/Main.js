@@ -22,6 +22,30 @@ export default function Main(props) {
   const [boardLetters, setBoardLetters] = React.useState(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']);
   let [spaceColor, setSpaceColor] = React.useState('d');
 
+  async function getBoardAndReset() {
+    const res = await fetch(`http://localhost:5000/`);
+    if (res.ok) {
+      const bd = await res.json();
+      const newBoard = createBoard();
+      const boardWithPieces = bd.brd.puzzleBoard.board;
+      // Iterate over all positions and add pieces to newBoard
+      for (let x = 0; x < 8; x++) {
+        for (let y = 0; y < 8; y++) {
+          const posOrPiece = boardWithPieces[x][y];
+          if (posOrPiece !== '____') {
+            newBoard.addPiece(x, y, posOrPiece.color, posOrPiece.pieceType);
+          }
+        }
+      }
+
+      setBoard(newBoard);
+      setWithinTurns(bd.brd.findCheckmateWithin);
+      setIsStalemate(false);
+      setCheckmatedColor(null);
+      setcurrTurn(0);
+    }
+  }
+
   React.useEffect(() => {
     async function getBoardFetch() {
       const res = await fetch(`http://localhost:5000/`);
@@ -174,6 +198,7 @@ export default function Main(props) {
             </Stack>
             <BoardStatusText isStalemate={isStalemate} checkmatedColor={checkmatedColor} currTurn={currTurn} withinTurns={withinTurns}/>
             <EnterMoves isStalemate={isStalemate} checkmatedColor={checkmatedColor} handleMoveChange={handleMoveChange} handleSubmit={handleSubmit} handleSubmitClick={handleSubmitClick}/>
+            <Button onClick={getBoardAndReset}>New Puzzle</Button>
           </> :
           <></>
       }
