@@ -17,16 +17,16 @@ export default function BoardStatusText(props) {
   } else if (props.checkmatedColor !== null) {
     if (props.checkmatedColor === 'b') {
       return (
-        <Typography>White found checkmate on turn {props.currTurn}, and the challenge was to find checkmate within {props.withinTurns} turns.</Typography>
+        <Typography>White found checkmate on turn {props.currTurn}.</Typography>
       );
     } else {
       return (
-        <Typography>Black found checkmate on turn {props.currTurn}, and the challenge was to find checkmate within {props.withinTurns} turns.</Typography>
+        <Typography>Black found checkmate on turn {props.currTurn}.</Typography>
       );
     }
   } else {
     return (
-      <Typography>Try to find checkmate for white within {props.withinTurns} turns. This is turn {props.currTurn}.</Typography>
+      <Typography>Try to find checkmate for white. This is turn {props.currTurn}.</Typography>
     );
   }
 }
