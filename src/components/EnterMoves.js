@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable react/prop-types */
 import React from 'react';
-import {TextField, Button} from '@material-ui/core';
+import {TextField, Button, Paper} from '@material-ui/core';
 
 /**
  * Displays textfield and button for user interaction as long as
@@ -18,9 +18,11 @@ export default function EnterMoves(props) {
   }
 
   return (
-    <div className='moveFieldParent'>
+    <Paper elevation={3} className='enterMovesParent'>
       <TextField label="Enter move (ie 'c5 c6')" variant="outlined" onChange={props.handleMoveChange} onKeyUp={props.handleSubmit}/>
-      <Button onClick={props.handleSubmitClick}>Submit Move</Button>
-    </div>
+      <div>
+        <Button onClick={props.handleSubmitClick} variant="outlined">Submit Move</Button>
+      </div>
+    </Paper>
   );
 }

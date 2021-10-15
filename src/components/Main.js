@@ -164,23 +164,25 @@ export default function Main(props) {
   return (
     <Container>
       <Typography variant='h3' align='center'>Chess Puzzler</Typography>
-      { board ?
+      <Paper elevation={3} className='boardContainer'>
+        { board ?
           board.board.map((rowArr, rowIdx) => {
             return (boardRow(rowArr, rowIdx));
           }) :
           <Typography>No board found. Please reload the page and try again.</Typography>
-      }
-      { board ?
+        }
+        { board ?
           <>
             <Stack direction='row' spacing={0}>
               <Typography className='boardLetters'>{boardLetters.map((letter)=>letter)}</Typography>
             </Stack>
             <BoardStatusText isStalemate={isStalemate} checkmatedColor={checkmatedColor} currTurn={currTurn} withinTurns={withinTurns}/>
             <EnterMoves isStalemate={isStalemate} checkmatedColor={checkmatedColor} handleMoveChange={handleMoveChange} handleSubmit={handleSubmit} handleSubmitClick={handleSubmitClick}/>
-            <Button onClick={getBoardAndReset}>New Puzzle</Button>
+            <Button onClick={getBoardAndReset} variant="outlined">New Puzzle</Button>
           </> :
           <></>
-      }
+        }
+      </Paper>
     </Container>
   );
 }

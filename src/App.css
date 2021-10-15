@@ -3,6 +3,11 @@ body {
   background-size: cover;
 }
 
+.boardContainer {
+  margin: 50px;
+  padding: 50px;
+}
+
 .boardParent {
   margin: 0;
   padding: 0;
@@ -22,7 +27,7 @@ body {
   letter-spacing: 36px;
 }
 
-.moveFieldParent {
+.enterMovesParent {
   margin: 10px;
   padding: 10px;
 }
