@@ -1,11 +1,12 @@
+body {
+  background-image: url(http://localhost:3000/background/bg3.png);
+  background-size: cover;
+}
+
 .boardParent {
   margin: 0;
   padding: 0;
   line-height: 0px;
-}
-
-.boardSpace {
-
 }
 
 .boardPiece {
