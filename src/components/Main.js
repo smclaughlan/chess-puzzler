@@ -8,6 +8,7 @@ import Piece from './Piece';
 import BoardStatusText from './BoardStatusText';
 import EnterMoves from './EnterMoves';
 import TopBar from './TopBar';
+import Footer from './Footer';
 import {createBoard} from '../chess/createBoard';
 import {isValidMove} from '../utils/isValidMove';
 import {stringToBoardPosition} from '../utils//stringToBoardPosition';
@@ -165,16 +166,17 @@ export default function Main(props) {
 
 
   return (
-    <Container>
-      <TopBar/>
-      <Paper elevation={3} className='boardContainer'>
-        { board ?
+    <>
+      <Container>
+        <TopBar/>
+        <Paper elevation={3} className='boardContainer'>
+          { board ?
           board.board.map((rowArr, rowIdx) => {
             return (boardRow(rowArr, rowIdx));
           }) :
           <Typography>No board found. Please reload the page and try again.</Typography>
-        }
-        { board ?
+          }
+          { board ?
           <>
             <Stack direction='row' spacing={0} justifyContent='center'>
               <Typography className='boardLetters'>{boardLetters.map((letter)=>letter)}</Typography>
@@ -186,8 +188,10 @@ export default function Main(props) {
             </div>
           </> :
           <></>
-        }
-      </Paper>
-    </Container>
+          }
+        </Paper>
+      </Container>
+      <Footer/>
+    </>
   );
 }
