@@ -7,6 +7,7 @@ import {Button, Container, Paper, Stack, Typography, TextField} from '@material-
 import Piece from './Piece';
 import BoardStatusText from './BoardStatusText';
 import EnterMoves from './EnterMoves';
+import TopBar from './TopBar';
 import {createBoard} from '../chess/createBoard';
 import {isValidMove} from '../utils/isValidMove';
 import {stringToBoardPosition} from '../utils//stringToBoardPosition';
@@ -165,7 +166,7 @@ export default function Main(props) {
 
   return (
     <Container>
-      <Typography variant='h3' align='center'>Chess Puzzler</Typography>
+      <TopBar/>
       <Paper elevation={3} className='boardContainer'>
         { board ?
           board.board.map((rowArr, rowIdx) => {
