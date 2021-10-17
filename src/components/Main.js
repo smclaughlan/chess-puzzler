@@ -87,77 +87,79 @@ export default function Main(props) {
     setMoveStr(e.target.value);
   }
 
+  async function getMoveResponse() {
+    const [moveStrStart, moveStrEnd] = moveStr.split(' ');
+    const [moveStartX, moveStartY] = stringToBoardPosition(moveStrStart);
+    const [moveEndX, moveEndY] = stringToBoardPosition(moveStrEnd);
+    const newBoard = board.copyBoard();
+    // Save piece from start pos
+    const savedPieceColor = newBoard.board[moveStartX][moveStartY].color;
+    const savedPieceType = newBoard.board[moveStartX][moveStartY].pieceType;
+    // Remove piece from start pos
+    newBoard.removePiece(moveStartX, moveStartY);
+    // Remove piece at end pos
+    newBoard.removePiece(moveEndX, moveEndY);
+    // Place saved piece at end pos
+    newBoard.addPiece(moveEndX, moveEndY, savedPieceColor, savedPieceType);
+    setBoard(newBoard);
+    setcurrTurn(currTurn + 1);
+
+    try {
+      const res = await fetch(`http://localhost:5000/move`, {
+        method: 'POST',
+        body: JSON.stringify(newBoard),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (!res.ok) {
+        console.log(res);
+        throw res;
+      } else if (res.ok) {
+        const resJson = await res.json();
+        console.log(resJson);
+        if (resJson.stalemate === true) {
+          setIsStalemate(true);
+        } else if (resJson.checkmated === 'b') {
+          setCheckmatedColor('b');
+        } else if (resJson.move) {
+          const nextBoard = createBoard();
+          const boardWithPieces = resJson.move.board;
+          for (let x = 0; x < 8; x++) {
+            for (let y = 0; y < 8; y++) {
+              const posOrPiece = boardWithPieces[x][y];
+              if (posOrPiece !== '____') {
+                nextBoard.addPiece(x, y, posOrPiece.color, posOrPiece.pieceType);
+              }
+            }
+          }
+          setBoard(nextBoard);
+          setcurrTurn(currTurn + 2);
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   async function handleSubmit(e) {
     if (e.key === 'Enter') {
-      console.log('Enter key pressed.');
-      console.log(moveStr);
       const moveValid = isValidMove(moveStr, board);
       // If the move is valid, modify the board with the move,
       // and send to backend
       if (moveValid) {
-        const [moveStrStart, moveStrEnd] = moveStr.split(' ');
-        const [moveStartX, moveStartY] = stringToBoardPosition(moveStrStart);
-        const [moveEndX, moveEndY] = stringToBoardPosition(moveStrEnd);
-        const newBoard = board.copyBoard();
-        // Save piece from start pos
-        const savedPieceColor = newBoard.board[moveStartX][moveStartY].color;
-        const savedPieceType = newBoard.board[moveStartX][moveStartY].pieceType;
-        // Remove piece from start pos
-        newBoard.removePiece(moveStartX, moveStartY);
-        // Remove piece at end pos
-        newBoard.removePiece(moveEndX, moveEndY);
-        // Place saved piece at end pos
-        newBoard.addPiece(moveEndX, moveEndY, savedPieceColor, savedPieceType);
-        setBoard(newBoard);
-        setcurrTurn(currTurn + 1);
-
-        try {
-          const res = await fetch(`http://localhost:5000/move`, {
-            method: 'POST',
-            body: JSON.stringify(newBoard),
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
-          if (!res.ok) {
-            console.log(res);
-            throw res;
-          } else if (res.ok) {
-            const resJson = await res.json();
-            console.log(resJson);
-            if (resJson.stalemate === true) {
-              setIsStalemate(true);
-            } else if (resJson.checkmated === 'b') {
-              setCheckmatedColor('b');
-            } else if (resJson.move) {
-              const nextBoard = createBoard();
-              const boardWithPieces = resJson.move.board;
-              for (let x = 0; x < 8; x++) {
-                for (let y = 0; y < 8; y++) {
-                  const posOrPiece = boardWithPieces[x][y];
-                  if (posOrPiece !== '____') {
-                    nextBoard.addPiece(x, y, posOrPiece.color, posOrPiece.pieceType);
-                  }
-                }
-              }
-              setBoard(nextBoard);
-              setcurrTurn(currTurn + 2);
-            }
-          }
-        } catch (err) {
-          console.log(err);
-        }
+        getMoveResponse();
       }
     }
   }
 
   function handleSubmitClick() {
-    console.log(moveStr);
     const moveValid = isValidMove(moveStr, board);
     // If the move is valid, modify the board with the move,
     // and send to backend
-    // if (moveValid) {
-    // }
+    if (moveValid) {
+      getMoveResponse();
+    }
   }
 
 
