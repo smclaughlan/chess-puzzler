@@ -19,9 +19,9 @@ export default function EnterMoves(props) {
 
   return (
     <Paper elevation={3} className='enterMovesParent'>
-      <TextField label="Enter move (ie 'c5 c6')" variant="outlined" onChange={props.handleMoveChange} onKeyUp={props.handleSubmit}/>
-      <div>
-        <Button onClick={props.handleSubmitClick} variant="outlined">Submit Move</Button>
+      <TextField label="Enter move (ie 'c5 c6')" variant="outlined" color="primary" onChange={props.handleMoveChange} onKeyUp={props.handleSubmit}/>
+      <div className='buttonContainer'>
+        <Button className="button" onClick={props.handleSubmitClick} variant="outlined" color="primary">Submit Move</Button>
       </div>
     </Paper>
   );

@@ -180,7 +180,9 @@ export default function Main(props) {
             </Stack>
             <BoardStatusText isStalemate={isStalemate} checkmatedColor={checkmatedColor} currTurn={currTurn} withinTurns={withinTurns}/>
             <EnterMoves isStalemate={isStalemate} checkmatedColor={checkmatedColor} handleMoveChange={handleMoveChange} handleSubmit={handleSubmit} handleSubmitClick={handleSubmitClick}/>
-            <Button onClick={getBoardAndReset} variant="outlined">New Puzzle</Button>
+            <div className='buttonContainer'>
+              <Button onClick={getBoardAndReset} variant='outlined'>New Puzzle</Button>
+            </div>
           </> :
           <></>
         }
