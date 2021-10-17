@@ -12,6 +12,7 @@ import Footer from './Footer';
 import {createBoard} from '../chess/createBoard';
 import {isValidMove} from '../utils/isValidMove';
 import {stringToBoardPosition} from '../utils//stringToBoardPosition';
+import {apiBaseUrl} from '../config';
 
 export default function Main(props) {
   const [board, setBoard] = React.useState();
@@ -25,7 +26,8 @@ export default function Main(props) {
   let [spaceColor, setSpaceColor] = React.useState('d');
 
   async function getBoardAndReset() {
-    const res = await fetch(`http://localhost:5000/`);
+    console.log('apibaseurl: ', apiBaseUrl);
+    const res = await fetch(`${apiBaseUrl}/`);
     if (res.ok) {
       const bd = await res.json();
       const newBoard = createBoard();
@@ -107,7 +109,7 @@ export default function Main(props) {
     setcurrTurn(currTurn + 1);
 
     try {
-      const res = await fetch(`http://localhost:5000/move`, {
+      const res = await fetch(`${apiBaseUrl}/move`, {
         method: 'POST',
         body: JSON.stringify(newBoard),
         headers: {
