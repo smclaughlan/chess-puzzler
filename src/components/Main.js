@@ -52,7 +52,7 @@ export default function Main(props) {
 
   function boardRow(rowArr, rowIdx) {
     return (
-      <Stack key={rowIdx} direction='row' spacing={0}>
+      <Stack className='boardRow' key={rowIdx} direction='row' spacing={0} justifyContent='center'>
         <Typography className='boardNumber'>{boardNums[rowIdx]}</Typography>
         {rowArr.map((spaceOrPiece, spaceIdx) => {
           return (boardLocation(spaceOrPiece, rowIdx, spaceIdx));
@@ -173,7 +173,7 @@ export default function Main(props) {
         }
         { board ?
           <>
-            <Stack direction='row' spacing={0}>
+            <Stack direction='row' spacing={0} justifyContent='center'>
               <Typography className='boardLetters'>{boardLetters.map((letter)=>letter)}</Typography>
             </Stack>
             <BoardStatusText isStalemate={isStalemate} checkmatedColor={checkmatedColor} currTurn={currTurn} withinTurns={withinTurns}/>

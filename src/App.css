@@ -6,6 +6,7 @@ body {
 .boardContainer {
   margin: 50px;
   padding: 50px;
+  text-align: center;
 }
 
 .boardParent {
@@ -23,8 +24,8 @@ body {
 }
 
 .boardLetters {
-  padding-left: 45px;
-  letter-spacing: 36px;
+  padding-left: 65px;
+  letter-spacing: 35px;
 }
 
 .enterMovesParent {
