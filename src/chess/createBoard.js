@@ -6,7 +6,7 @@ const {createPiece} = require('./createPiece');
  * Returns a new board.
  * @return {Object} - board
  */
-function createBoard() {
+export function createBoard() {
   const board = [
     [
       '____',
@@ -346,7 +346,3 @@ function createBoard() {
     removePiece,
   };
 }
-
-module.exports = {
-  createBoard,
-};

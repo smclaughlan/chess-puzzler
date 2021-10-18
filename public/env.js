@@ -54,7 +54,7 @@ window.env = {
   "WSLENV": "ELECTRON_RUN_AS_NODE/w:",
   "INIT_CWD": "/home/seneca/444_chess/chess-puzzler",
   "EDITOR": "vi",
+  "SKIP_PREFLIGHT_CHECK": "true",
   "SERVER_URL": "http://localhost:5000",
-  "GENERATE_SOURCEMAP": "false",
-  "SKIP_PREFLIGHT_CHECK": "true"
+  "GENERATE_SOURCEMAP": "false"
 };
