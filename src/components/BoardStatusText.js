@@ -26,7 +26,10 @@ export default function BoardStatusText(props) {
     }
   } else {
     return (
-      <Typography>Try to find checkmate for white. This is turn {props.currTurn}.</Typography>
+      <>
+        <Typography>Try to find checkmate for white. This is turn {props.currTurn}.</Typography>
+        <Typography>Note: For the purposes of these puzzles, pawns do not promote.</Typography>
+      </>
     );
   }
 }
