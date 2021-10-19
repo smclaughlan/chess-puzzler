@@ -26,7 +26,6 @@ export default function Main(props) {
   let [spaceColor, setSpaceColor] = React.useState('d');
 
   async function getBoardAndReset() {
-    console.log('apibaseurl: ', apiBaseUrl);
     const res = await fetch(`${apiBaseUrl}/`);
     if (res.ok) {
       const bd = await res.json();
@@ -117,11 +116,9 @@ export default function Main(props) {
         },
       });
       if (!res.ok) {
-        console.log(res);
         throw res;
       } else if (res.ok) {
         const resJson = await res.json();
-        console.log(resJson);
         if (resJson.stalemate === true) {
           setIsStalemate(true);
         } else if (resJson.checkmated === 'b') {
