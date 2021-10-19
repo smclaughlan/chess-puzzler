@@ -24,14 +24,14 @@ export function isValidMove(moveString, board) {
     '1': true,
   };
   const mvStrSplit = moveString.split(' ');
+  // If moveString split on space isn't length === 2, return false.
+  if (mvStrSplit.length !== 2) return false;
   const firstPair = mvStrSplit[0];
   const secondPair = mvStrSplit[1];
   const firstPairLetter = firstPair[0];
   const firstPairNum = firstPair[1];
   const secondPairLetter = secondPair[0];
   const secondPairNum = secondPair[1];
-  // If moveString split on space isn't length === 2, return false.
-  if (mvStrSplit.length !== 2) return false;
   // If idx[0] of first pair isn't a-h, return false
   // If idx[1] of first pair isn't 1-8, return false
   if (!letters[firstPairLetter] || !nums[firstPairNum]) return false;
