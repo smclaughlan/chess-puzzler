@@ -26,26 +26,32 @@ export default function Main(props) {
   let [spaceColor, setSpaceColor] = React.useState('d');
 
   async function getBoardAndReset() {
-    const res = await fetch(`${apiBaseUrl}/`);
-    if (res.ok) {
-      const bd = await res.json();
-      const newBoard = createBoard();
-      const boardWithPieces = bd.brd.puzzleBoard.board;
-      // Iterate over all positions and add pieces to newBoard
-      for (let x = 0; x < 8; x++) {
-        for (let y = 0; y < 8; y++) {
-          const posOrPiece = boardWithPieces[x][y];
-          if (posOrPiece !== '____') {
-            newBoard.addPiece(x, y, posOrPiece.color, posOrPiece.pieceType);
+    try {
+      const res = await fetch(`${apiBaseUrl}/`);
+      if (!res.ok) {
+        console.log('Error: ', res);
+      } else {
+          const bd = await res.json();
+          const newBoard = createBoard();
+          const boardWithPieces = bd.brd.puzzleBoard.board;
+          // Iterate over all positions and add pieces to newBoard
+          for (let x = 0; x < 8; x++) {
+            for (let y = 0; y < 8; y++) {
+              const posOrPiece = boardWithPieces[x][y];
+              if (posOrPiece !== '____') {
+                newBoard.addPiece(x, y, posOrPiece.color, posOrPiece.pieceType);
+              }
+            }
           }
-        }
-      }
 
-      setBoard(newBoard);
-      setWithinTurns(bd.brd.findCheckmateWithin);
-      setIsStalemate(false);
-      setCheckmatedColor(null);
-      setcurrTurn(0);
+          setBoard(newBoard);
+          setWithinTurns(bd.brd.findCheckmateWithin);
+          setIsStalemate(false);
+          setCheckmatedColor(null);
+          setcurrTurn(0);
+      }
+    } catch (err) {
+      console.log(err);
     }
   }
 
@@ -83,7 +89,7 @@ export default function Main(props) {
     if (spaceOrPiece === '____') {
       spaceOrPiece = spaceColor;
     }
-    return (<Piece spaceOrPiece={spaceOrPiece} spaceColor={spaceColor}/>);
+    return (<Piece key={spaceIdx} spaceOrPiece={spaceOrPiece} spaceColor={spaceColor}/>);
   }
 
   function handleMoveChange(e) {
