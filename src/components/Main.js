@@ -16,6 +16,7 @@ import {apiBaseUrl} from '../config';
 
 export default function Main(props) {
   const [board, setBoard] = React.useState();
+  const [savedBoard, setSavedBoard] = React.useState();
   const [moveStr, setMoveStr] = React.useState('');
   const [withinTurns, setWithinTurns] = React.useState();
   const [isStalemate, setIsStalemate] = React.useState(false);
@@ -45,6 +46,7 @@ export default function Main(props) {
           }
 
           setBoard(newBoard);
+          setSavedBoard(newBoard);
           setWithinTurns(bd.brd.findCheckmateWithin);
           setIsStalemate(false);
           setCheckmatedColor(null);
@@ -58,6 +60,13 @@ export default function Main(props) {
   React.useEffect(() => {
     getBoardAndReset();
   }, []);
+
+  function resetBoard() {
+    setBoard(savedBoard);
+    setIsStalemate(false);
+    setCheckmatedColor(null);
+    setcurrTurn(0);
+  }
 
   function boardRow(rowArr, rowIdx) {
     return (
@@ -190,6 +199,9 @@ export default function Main(props) {
             <EnterMoves isStalemate={isStalemate} checkmatedColor={checkmatedColor} handleMoveChange={handleMoveChange} handleSubmit={handleSubmit} handleSubmitClick={handleSubmitClick}/>
             <div className='buttonContainer'>
               <Button onClick={getBoardAndReset} variant='outlined'>New Puzzle</Button>
+            </div>
+            <div className='buttonContainer'>
+              <Button onClick={resetBoard} variant='outlined'>Restart Puzzle</Button>
             </div>
           </> :
           <></>
