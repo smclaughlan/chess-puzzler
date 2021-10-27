@@ -183,11 +183,7 @@ export default function Main(props) {
   }
 
   function handlePositionClick(row, col, pieceColor) {
-    console.log('row: ', row);
-    console.log('col: ', col);
-    console.log('pieceColor: ', pieceColor);
     const strPos = boardPositionToString(row, col);
-    console.log('strPos: ', strPos);
     let newStr = clickMoveStr.split(' ');
     if (pieceColor === 'w') {
       // Set first part of move
@@ -199,7 +195,6 @@ export default function Main(props) {
     newStr = newStr.join(' ');
     setClickMoveStr(newStr);
     setMoveStr(newStr);
-    console.log('newStr', newStr);
   }
 
   return (
