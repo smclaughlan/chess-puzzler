@@ -11,13 +11,15 @@ import TopBar from './TopBar';
 import Footer from './Footer';
 import {createBoard} from '../chess/createBoard';
 import {isValidMove} from '../utils/isValidMove';
-import {stringToBoardPosition} from '../utils//stringToBoardPosition';
+import {stringToBoardPosition} from '../utils/stringToBoardPosition';
+import {boardPositionToString} from '../utils/boardPositionToString';
 import {apiBaseUrl} from '../config';
 
 export default function Main(props) {
   const [board, setBoard] = React.useState();
   const [savedBoard, setSavedBoard] = React.useState();
   const [moveStr, setMoveStr] = React.useState('');
+  const [clickMoveStr, setClickMoveStr] = React.useState('');
   const [withinTurns, setWithinTurns] = React.useState();
   const [isStalemate, setIsStalemate] = React.useState(false);
   const [checkmatedColor, setCheckmatedColor] = React.useState(null);
@@ -50,6 +52,7 @@ export default function Main(props) {
           setWithinTurns(bd.brd.findCheckmateWithin);
           setIsStalemate(false);
           setCheckmatedColor(null);
+          setClickMoveStr('');
           setcurrTurn(0);
       }
     } catch (err) {
@@ -64,6 +67,7 @@ export default function Main(props) {
   function resetBoard() {
     setBoard(savedBoard);
     setIsStalemate(false);
+    setClickMoveStr('');
     setCheckmatedColor(null);
     setcurrTurn(0);
   }
@@ -98,7 +102,7 @@ export default function Main(props) {
     if (spaceOrPiece === '____') {
       spaceOrPiece = spaceColor;
     }
-    return (<Piece key={spaceIdx} spaceOrPiece={spaceOrPiece} spaceColor={spaceColor}/>);
+    return (<Piece key={spaceIdx} spaceOrPiece={spaceOrPiece} spaceColor={spaceColor} handlePositionClick={handlePositionClick} row={rowIdx} col={spaceIdx}/>);
   }
 
   function handleMoveChange(e) {
@@ -178,6 +182,25 @@ export default function Main(props) {
     }
   }
 
+  function handlePositionClick(row, col, pieceColor) {
+    console.log('row: ', row);
+    console.log('col: ', col);
+    console.log('pieceColor: ', pieceColor);
+    const strPos = boardPositionToString(row, col);
+    console.log('strPos: ', strPos);
+    let newStr = clickMoveStr.split(' ');
+    if (pieceColor === 'w') {
+      // Set first part of move
+      newStr[0] = strPos;
+    } else {
+      // Set second part of move
+      newStr[1] = strPos;
+    }
+    newStr = newStr.join(' ');
+    setClickMoveStr(newStr);
+    setMoveStr(newStr);
+    console.log('newStr', newStr);
+  }
 
   return (
     <>
@@ -196,7 +219,7 @@ export default function Main(props) {
               <Typography className='boardLetters'>{boardLetters.map((letter)=>letter)}</Typography>
             </Stack>
             <BoardStatusText isStalemate={isStalemate} checkmatedColor={checkmatedColor} currTurn={currTurn} withinTurns={withinTurns}/>
-            <EnterMoves isStalemate={isStalemate} checkmatedColor={checkmatedColor} handleMoveChange={handleMoveChange} handleSubmit={handleSubmit} handleSubmitClick={handleSubmitClick}/>
+            <EnterMoves isStalemate={isStalemate} checkmatedColor={checkmatedColor} clickMoveStr={clickMoveStr} handleMoveChange={handleMoveChange} handleSubmit={handleSubmit} handleSubmitClick={handleSubmitClick}/>
             <div className='buttonContainer'>
               <Button onClick={getBoardAndReset} variant='outlined'>New Puzzle</Button>
             </div>
