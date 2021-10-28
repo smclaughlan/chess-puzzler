@@ -11,12 +11,13 @@ import TopBar from './TopBar';
 import Footer from './Footer';
 import {createBoard} from '../chess/createBoard';
 import {isValidMove} from '../utils/isValidMove';
+import {defaultBoard} from '../utils/defaultBoard';
 import {stringToBoardPosition} from '../utils/stringToBoardPosition';
 import {boardPositionToString} from '../utils/boardPositionToString';
 import {apiBaseUrl} from '../config';
 
 export default function Main(props) {
-  const [board, setBoard] = React.useState();
+  const [board, setBoard] = React.useState(defaultBoard);
   const [savedBoard, setSavedBoard] = React.useState();
   const [moveStr, setMoveStr] = React.useState('');
   const [clickMoveStr, setClickMoveStr] = React.useState('');
