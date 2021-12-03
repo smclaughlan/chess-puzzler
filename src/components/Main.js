@@ -214,7 +214,7 @@ export default function Main(props) {
             <Stack direction='row' spacing={0} justifyContent='center'>
               <Typography className='boardLetters'>{boardLetters.map((letter)=>letter)}</Typography>
             </Stack>
-            <BoardStatusText isStalemate={isStalemate} checkmatedColor={checkmatedColor} currTurn={currTurn} withinTurns={withinTurns}/>
+            <BoardStatusText board={board} isStalemate={isStalemate} checkmatedColor={checkmatedColor} currTurn={currTurn} withinTurns={withinTurns}/>
             <EnterMoves isStalemate={isStalemate} checkmatedColor={checkmatedColor} clickMoveStr={clickMoveStr} handleMoveChange={handleMoveChange} handleSubmit={handleSubmit} handleSubmitClick={handleSubmitClick}/>
             <div className='buttonContainer'>
               <Button onClick={getBoardAndReset} variant='outlined'>New Puzzle</Button>
