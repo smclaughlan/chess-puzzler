@@ -10,26 +10,51 @@ import {Typography} from '@material-ui/core';
  * @return {*}
  */
 export default function BoardStatusText(props) {
-  if (props.isStalemate) {
-    return (
-      <Typography>Stalemate on turn {props.currTurn}.</Typography>
-    );
-  } else if (props.checkmatedColor !== null) {
-    if (props.checkmatedColor === 'b') {
-      return (
-        <Typography>White found checkmate on turn {props.currTurn}.</Typography>
-      );
-    } else {
-      return (
-        <Typography>Black found checkmate on turn {props.currTurn}.</Typography>
-      );
-    }
-  } else {
+  const isInCheckWhite = props.board && props.board.isInCheck('w');
+  const isInCheckBlack = props.board && props.board.isInCheck('b');
+
+  const showDefaultText =
+  isInCheckWhite === false &&
+  isInCheckBlack === false &&
+  props.isStalemate === false &&
+  props.checkmatedColor === null;
+
+  if (showDefaultText) {
     return (
       <>
         <Typography>Try to find checkmate for white. This is turn {props.currTurn}.</Typography>
         <Typography>Note: For the purposes of these puzzles, pawns do not promote.</Typography>
       </>
-    );
+    )
   }
+
+  return (
+    <>
+      {isInCheckWhite && props.checkmatedColor === null ?
+        <Typography>White in check!</Typography>
+      :
+        <></>
+      }
+      {isInCheckBlack && props.checkmatedColor === null ?
+        <Typography>Black in check!</Typography>
+      :
+        <></>
+      }
+      {props.isStalemate ?
+        <Typography>Stalemate on turn {props.currTurn}.</Typography>
+      :
+        <></>
+      }
+      {props.checkmatedColor === 'b' ?
+        <Typography>White found checkmate on turn {props.currTurn}.</Typography>
+      :
+        <></>
+      }
+      {props.checkmatedColor === 'w' ?
+        <Typography>Black found checkmate on turn {props.currTurn}.</Typography>
+      :
+        <></>
+      }
+    </>
+  )
 }
