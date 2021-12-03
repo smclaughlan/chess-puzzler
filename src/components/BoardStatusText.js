@@ -10,8 +10,14 @@ import {Typography} from '@material-ui/core';
  * @return {*}
  */
 export default function BoardStatusText(props) {
-  const isInCheckWhite = props.board && props.board.isInCheck('w');
-  const isInCheckBlack = props.board && props.board.isInCheck('b');
+  const isInCheckWhite =
+    props.board &&
+    props.board.isInCheck &&
+    props.board.isInCheck('w');
+  const isInCheckBlack =
+    props.board &&
+    props.board.isInCheck &&
+    props.board.isInCheck('b');
 
   const showDefaultText =
   isInCheckWhite === false &&
