@@ -115,8 +115,17 @@ export default function Main(props) {
         spaceColor = 'l';
       }
     }
+
     if (spaceOrPiece === '____') {
       spaceOrPiece = spaceColor;
+    }
+
+    // If the king is in check, change spaceColor to 'c'
+    if (checkedColor !== null &&
+      spaceOrPiece !== '____' &&
+      spaceOrPiece.pieceType === 'k' &&
+      spaceOrPiece.color === checkedColor) {
+      spaceColor = 'c';
     }
     return (<Piece key={spaceIdx} spaceOrPiece={spaceOrPiece} spaceColor={spaceColor} handlePositionClick={handlePositionClick} row={rowIdx} col={spaceIdx}/>);
   }
