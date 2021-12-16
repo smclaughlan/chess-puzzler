@@ -24,6 +24,7 @@ export default function Main(props) {
   const [withinTurns, setWithinTurns] = React.useState();
   const [isStalemate, setIsStalemate] = React.useState(false);
   const [checkmatedColor, setCheckmatedColor] = React.useState(null);
+  const [checkedColor, setCheckedColor] = React.useState(null);
   const [currTurn, setcurrTurn] = React.useState(0);
   const [boardNums, setBoardNums] = React.useState([8, 7, 6, 5, 4, 3, 2, 1]);
   const [boardLetters, setBoardLetters] = React.useState(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']);
@@ -55,6 +56,13 @@ export default function Main(props) {
           setCheckmatedColor(null);
           setClickMoveStr('');
           setcurrTurn(0);
+          if (newBoard.isInCheck('w')) {
+            setCheckedColor('w');
+          } else if (newBoard.isInCheck('b')) {
+            setCheckedColor('b');
+          } else {
+            setCheckedColor(null);
+          }
       }
     } catch (err) {
       console.log(err);
@@ -71,6 +79,13 @@ export default function Main(props) {
     setClickMoveStr('');
     setCheckmatedColor(null);
     setcurrTurn(0);
+    if (savedBoard.isInCheck('w')) {
+      setCheckedColor('w');
+    } else if (savedBoard.isInCheck('b')) {
+      setCheckedColor('b');
+    } else {
+      setCheckedColor(null);
+    }
   }
 
   function boardRow(rowArr, rowIdx) {
@@ -156,6 +171,13 @@ export default function Main(props) {
           }
           setBoard(nextBoard);
           setcurrTurn(currTurn + 2);
+          if (nextBoard.isInCheck('w')) {
+            setCheckedColor('w');
+          } else if (nextBoard.isInCheck('b')) {
+            setCheckedColor('b');
+          } else {
+            setCheckedColor(null);
+          }
         }
       }
     } catch (err) {
@@ -214,7 +236,7 @@ export default function Main(props) {
             <Stack direction='row' spacing={0} justifyContent='center'>
               <Typography className='boardLetters'>{boardLetters.map((letter)=>letter)}</Typography>
             </Stack>
-            <BoardStatusText board={board} isStalemate={isStalemate} checkmatedColor={checkmatedColor} currTurn={currTurn} withinTurns={withinTurns}/>
+            <BoardStatusText board={board} isStalemate={isStalemate} checkedColor={checkedColor} checkmatedColor={checkmatedColor} currTurn={currTurn} withinTurns={withinTurns}/>
             <EnterMoves isStalemate={isStalemate} checkmatedColor={checkmatedColor} clickMoveStr={clickMoveStr} handleMoveChange={handleMoveChange} handleSubmit={handleSubmit} handleSubmitClick={handleSubmitClick}/>
             <div className='buttonContainer'>
               <Button onClick={getBoardAndReset} variant='outlined'>New Puzzle</Button>
