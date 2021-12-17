@@ -54,6 +54,7 @@ export default function Main(props) {
           setWithinTurns(bd.brd.findCheckmateWithin);
           setIsStalemate(false);
           setCheckmatedColor(null);
+          setMoveStr('');
           setClickMoveStr('');
           setcurrTurn(0);
           if (newBoard.isInCheck('w')) {
@@ -76,6 +77,7 @@ export default function Main(props) {
   function resetBoard() {
     setBoard(savedBoard);
     setIsStalemate(false);
+    setMoveStr('');
     setClickMoveStr('');
     setCheckmatedColor(null);
     setcurrTurn(0);
@@ -127,6 +129,14 @@ export default function Main(props) {
       spaceOrPiece.color === checkedColor) {
       spaceColor = 'c';
     }
+
+    // If the space is in moveStr or clickMoveStr
+    // make its background 's' to show it being selected
+    const position = boardPositionToString(rowIdx, spaceIdx);
+    if (moveStr.includes(position)) {
+      spaceColor = 's';
+    }
+
     return (<Piece key={spaceIdx} spaceOrPiece={spaceOrPiece} spaceColor={spaceColor} handlePositionClick={handlePositionClick} row={rowIdx} col={spaceIdx}/>);
   }
 
@@ -180,6 +190,8 @@ export default function Main(props) {
           }
           setBoard(nextBoard);
           setcurrTurn(currTurn + 2);
+          setMoveStr('');
+          setClickMoveStr('');
           if (nextBoard.isInCheck('w')) {
             setCheckedColor('w');
           } else if (nextBoard.isInCheck('b')) {
