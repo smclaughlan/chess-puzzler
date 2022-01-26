@@ -11,12 +11,12 @@ export default function Footer() {
             <Typography color="inherit">© Sean McLaughlan</Typography>
           </Grid>
           <Grid item xs={4} style={{textAlign: 'center', marginTop: '50px'}}>
-            <a style={{color: 'white'}} href="https://github.com/smclaughlan/">
+            <a style={{color: 'white'}} href="https://github.com/smclaughlan/chess-puzzler" target="_blank">
               <Typography color="inherit">GitHub</Typography>
             </a>
           </Grid>
           <Grid item xs={4} style={{textAlign: 'center', marginTop: '50px'}}>
-            <a style={{color: 'white'}} href="https://smclaughlan.github.io/#four">
+            <a style={{color: 'white'}} href="https://smclaughlan.github.io/#four" target="_blank">
               <Typography color="inherit">Contact</Typography>
             </a>
           </Grid>
