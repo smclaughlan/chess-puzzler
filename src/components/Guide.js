@@ -6,16 +6,17 @@ import {
   AccordionDetails,
   Typography,
 } from "@material-ui/core";
+import GuideText from "./GuideText";
 
 export default function Guide() {
   return (
-    <div>
+    <div className="guide">
       <Accordion>
         <AccordionSummary>
           <Typography>Guide</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>Guide Text. More text.</Typography>
+          <GuideText />
         </AccordionDetails>
       </Accordion>
     </div>
