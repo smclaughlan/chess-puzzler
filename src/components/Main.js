@@ -364,13 +364,13 @@ export default function Main(props) {
                 >
                   Restart Puzzle
                 </Button>
-                <Guide />
               </div>
             </>
           ) : (
             <></>
           )}
         </Paper>
+        <Guide />
       </Container>
       <Footer />
     </>
