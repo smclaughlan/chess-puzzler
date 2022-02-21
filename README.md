@@ -26,7 +26,7 @@ The guide covers users interaction.
 A Node Express server handles requests for a new puzzle as well as AI responses to player moves.
 #### Chess Logic
 
-Before creating a piece, the relative positions it can move to need to be tracked.
+Before creating a piece, the relative positions it can move to need to be tracked. The King's moves, for example:
 
 ```js
 const kMoves = [
