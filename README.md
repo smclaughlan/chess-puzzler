@@ -17,7 +17,7 @@ The interface uses MaterialUI in combination with CSS.
 
 ![](documentation/chesspuzzler1.png)
 
-The guide covers users interaction.
+The guide covers user interaction.
 
 ![](documentation/chesspuzzler2.png)
 
