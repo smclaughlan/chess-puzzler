@@ -40,6 +40,7 @@ export default function Footer() {
               style={{ color: "white" }}
               href="https://github.com/smclaughlan/chess-puzzler"
               target="_blank"
+              rel="noreferrer"
             >
               <Typography color="inherit">
                 GitHub
@@ -58,6 +59,7 @@ export default function Footer() {
               style={{ color: "white" }}
               href="https://smclaughlan.github.io/#four"
               target="_blank"
+              rel="noreferrer"
             >
               <Typography color="inherit">
                 Contact
