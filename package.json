@@ -17,7 +17,7 @@
     "web-vitals": "^1.1.1"
   },
   "scripts": {
-    "start": "react-dotenv && react-scripts",
+    "start": "react-dotenv && react-scripts start",
     "startlegacy": "react-dotenv && react-scripts --openssl-legacy-provider start",
     "build": "react-dotenv && react-scripts build",
     "buildlegacy": "react-dotenv && react-scripts --openssl-legacy-provider build",
