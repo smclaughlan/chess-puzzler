@@ -635,7 +635,3 @@ export default function createPiece(
     },
   };
 }
-
-module.exports = {
-  createPiece,
-};
