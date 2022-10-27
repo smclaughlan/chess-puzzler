@@ -4,14 +4,12 @@
 // see https://en.wikipedia.org/wiki/Chess_piece_relative_value
 
 const pieceValue = {
-  'p': 100,
-  'n': 350,
-  'b': 350,
-  'r': 525,
-  'q': 1000,
-  'k': 10000,
+  p: 100,
+  n: 350,
+  b: 350,
+  r: 525,
+  q: 1000,
+  k: 10000,
 };
 
-module.exports = {
-  pieceValue,
-};
+export default pieceValue;
